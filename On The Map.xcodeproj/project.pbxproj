@@ -8,11 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		B62084371ADCF7050032CD9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62084361ADCF7050032CD9F /* AppDelegate.swift */; };
-		B62084391ADCF7050032CD9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62084381ADCF7050032CD9F /* ViewController.swift */; };
 		B620843C1ADCF7050032CD9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B620843A1ADCF7050032CD9F /* Main.storyboard */; };
 		B620843E1ADCF7050032CD9F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B620843D1ADCF7050032CD9F /* Images.xcassets */; };
 		B62084411ADCF7050032CD9F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B620843F1ADCF7050032CD9F /* LaunchScreen.xib */; };
 		B620844D1ADCF7060032CD9F /* On_The_MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B620844C1ADCF7060032CD9F /* On_The_MapTests.swift */; };
+		B644FCFB1AFB3B7600BC7738 /* StudentInformationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B644FCFA1AFB3B7600BC7738 /* StudentInformationAnnotation.swift */; };
+		B64E8C471ADDF38800D5D20F /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B62084581ADCF7820032CD9F /* Roboto-Thin.ttf */; };
+		B64E8C481ADDF38F00D5D20F /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B62084561ADCF7820032CD9F /* Roboto-Medium.ttf */; };
+		B64E8C491ADDF39300D5D20F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B62084571ADCF7820032CD9F /* Roboto-Regular.ttf */; };
+		B64E8C4B1ADDF62200D5D20F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64E8C4A1ADDF62200D5D20F /* LoginViewController.swift */; };
+		B64E8C4D1ADDFC6400D5D20F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64E8C4C1ADDFC6400D5D20F /* MapViewController.swift */; };
+		B64E8C4F1ADE17D200D5D20F /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64E8C4E1ADE17D200D5D20F /* ListTableViewController.swift */; };
+		B64E8C511ADE184600D5D20F /* StudentInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64E8C501ADE184600D5D20F /* StudentInfoTableViewCell.swift */; };
+		B64E8C531ADE25B200D5D20F /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64E8C521ADE25B200D5D20F /* InformationPostingViewController.swift */; };
+		B64E8C551ADE449000D5D20F /* URLPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64E8C541ADE449000D5D20F /* URLPostingViewController.swift */; };
+		B6707DC51AEF1FD50005EE0D /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6707DC41AEF1FD50005EE0D /* StudentInformation.swift */; };
+		B6707DC71AEF248F0005EE0D /* OnTheMapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6707DC61AEF248F0005EE0D /* OnTheMapClient.swift */; };
+		B6707DC91AEF26170005EE0D /* OnTheMapConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6707DC81AEF26170005EE0D /* OnTheMapConstants.swift */; };
+		B6FA2B251AF0B49F004B0DBA /* OnTheMapConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FA2B241AF0B49F004B0DBA /* OnTheMapConvenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +42,26 @@
 		B62084311ADCF7050032CD9F /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62084351ADCF7050032CD9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B62084361ADCF7050032CD9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B62084381ADCF7050032CD9F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B620843B1ADCF7050032CD9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B620843D1ADCF7050032CD9F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B62084401ADCF7050032CD9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B62084461ADCF7060032CD9F /* On The MapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On The MapTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B620844B1ADCF7060032CD9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B620844C1ADCF7060032CD9F /* On_The_MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_The_MapTests.swift; sourceTree = "<group>"; };
+		B62084561ADCF7820032CD9F /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		B62084571ADCF7820032CD9F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		B62084581ADCF7820032CD9F /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		B644FCFA1AFB3B7600BC7738 /* StudentInformationAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformationAnnotation.swift; sourceTree = "<group>"; };
+		B64E8C4A1ADDF62200D5D20F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		B64E8C4C1ADDFC6400D5D20F /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		B64E8C4E1ADE17D200D5D20F /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		B64E8C501ADE184600D5D20F /* StudentInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInfoTableViewCell.swift; sourceTree = "<group>"; };
+		B64E8C521ADE25B200D5D20F /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
+		B64E8C541ADE449000D5D20F /* URLPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLPostingViewController.swift; sourceTree = "<group>"; };
+		B6707DC41AEF1FD50005EE0D /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		B6707DC61AEF248F0005EE0D /* OnTheMapClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapClient.swift; sourceTree = "<group>"; };
+		B6707DC81AEF26170005EE0D /* OnTheMapConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapConstants.swift; sourceTree = "<group>"; };
+		B6FA2B241AF0B49F004B0DBA /* OnTheMapConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnTheMapConvenience.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,10 +104,9 @@
 			isa = PBXGroup;
 			children = (
 				B62084361ADCF7050032CD9F /* AppDelegate.swift */,
-				B62084381ADCF7050032CD9F /* ViewController.swift */,
-				B620843A1ADCF7050032CD9F /* Main.storyboard */,
-				B620843D1ADCF7050032CD9F /* Images.xcassets */,
-				B620843F1ADCF7050032CD9F /* LaunchScreen.xib */,
+				B6707DBE1AEF1E5F0005EE0D /* Model */,
+				B6707DC01AEF1EC00005EE0D /* View */,
+				B6707DBF1AEF1E9C0005EE0D /* Controller */,
 				B62084341ADCF7050032CD9F /* Supporting Files */,
 			);
 			path = "On The Map";
@@ -90,6 +115,9 @@
 		B62084341ADCF7050032CD9F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B6707DC11AEF1F060005EE0D /* Storyboards */,
+				B6707DC21AEF1F300005EE0D /* Fonts */,
+				B620843D1ADCF7050032CD9F /* Images.xcassets */,
 				B62084351ADCF7050032CD9F /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -110,6 +138,65 @@
 				B620844B1ADCF7060032CD9F /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6707DBE1AEF1E5F0005EE0D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B6707DC41AEF1FD50005EE0D /* StudentInformation.swift */,
+				B644FCFA1AFB3B7600BC7738 /* StudentInformationAnnotation.swift */,
+				B6707DC31AEF1FA40005EE0D /* Clients */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		B6707DBF1AEF1E9C0005EE0D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B64E8C4A1ADDF62200D5D20F /* LoginViewController.swift */,
+				B64E8C4C1ADDFC6400D5D20F /* MapViewController.swift */,
+				B64E8C4E1ADE17D200D5D20F /* ListTableViewController.swift */,
+				B64E8C521ADE25B200D5D20F /* InformationPostingViewController.swift */,
+				B64E8C541ADE449000D5D20F /* URLPostingViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		B6707DC01AEF1EC00005EE0D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B64E8C501ADE184600D5D20F /* StudentInfoTableViewCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		B6707DC11AEF1F060005EE0D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				B620843A1ADCF7050032CD9F /* Main.storyboard */,
+				B620843F1ADCF7050032CD9F /* LaunchScreen.xib */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		B6707DC21AEF1F300005EE0D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B62084561ADCF7820032CD9F /* Roboto-Medium.ttf */,
+				B62084571ADCF7820032CD9F /* Roboto-Regular.ttf */,
+				B62084581ADCF7820032CD9F /* Roboto-Thin.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		B6707DC31AEF1FA40005EE0D /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				B6707DC61AEF248F0005EE0D /* OnTheMapClient.swift */,
+				B6707DC81AEF26170005EE0D /* OnTheMapConstants.swift */,
+				B6FA2B241AF0B49F004B0DBA /* OnTheMapConvenience.swift */,
+			);
+			name = Clients;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,6 +279,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B64E8C491ADDF39300D5D20F /* Roboto-Regular.ttf in Resources */,
+				B64E8C481ADDF38F00D5D20F /* Roboto-Medium.ttf in Resources */,
+				B64E8C471ADDF38800D5D20F /* Roboto-Thin.ttf in Resources */,
 				B620843C1ADCF7050032CD9F /* Main.storyboard in Resources */,
 				B62084411ADCF7050032CD9F /* LaunchScreen.xib in Resources */,
 				B620843E1ADCF7050032CD9F /* Images.xcassets in Resources */,
@@ -212,8 +302,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B62084391ADCF7050032CD9F /* ViewController.swift in Sources */,
+				B6707DC51AEF1FD50005EE0D /* StudentInformation.swift in Sources */,
+				B644FCFB1AFB3B7600BC7738 /* StudentInformationAnnotation.swift in Sources */,
+				B64E8C551ADE449000D5D20F /* URLPostingViewController.swift in Sources */,
+				B64E8C531ADE25B200D5D20F /* InformationPostingViewController.swift in Sources */,
+				B6707DC71AEF248F0005EE0D /* OnTheMapClient.swift in Sources */,
+				B64E8C4B1ADDF62200D5D20F /* LoginViewController.swift in Sources */,
+				B6FA2B251AF0B49F004B0DBA /* OnTheMapConvenience.swift in Sources */,
+				B64E8C4D1ADDFC6400D5D20F /* MapViewController.swift in Sources */,
 				B62084371ADCF7050032CD9F /* AppDelegate.swift in Sources */,
+				B64E8C4F1ADE17D200D5D20F /* ListTableViewController.swift in Sources */,
+				B64E8C511ADE184600D5D20F /* StudentInfoTableViewCell.swift in Sources */,
+				B6707DC91AEF26170005EE0D /* OnTheMapConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +509,7 @@
 				B62084521ADCF7060032CD9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B62084531ADCF7060032CD9F /* Build configuration list for PBXNativeTarget "On The MapTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +518,7 @@
 				B62084551ADCF7060032CD9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
