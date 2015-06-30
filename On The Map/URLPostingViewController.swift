@@ -9,10 +9,14 @@
 import UIKit
 import MapKit
 
+//MARK: - URLPostingViewControllerDelegate Protocol
+
 protocol URLPostingViewControllerDelegate {
     
     func controllerFinishedPostingNewData()
 }
+
+//MARK: - URLPostingViewController
 
 class URLPostingViewController: UIViewController {
 
@@ -102,16 +106,6 @@ class URLPostingViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     //MARK: - Helper functions
     
     func centreMapOnLocation(location: CLPlacemark) {
@@ -140,7 +134,6 @@ class URLPostingViewController: UIViewController {
         if text.length == 0 {
             
             alertUserWithTitle("Are you sure?", message: "You haven't entered a web address.")
-            println("return 1")
             return false
         }
         
@@ -159,13 +152,11 @@ class URLPostingViewController: UIViewController {
             } else {
                 
                 alertUserWithTitle("Are you sure?", message: "This doesn't seem to be a valid web page.")
-                println("return 2")
                 return false
             }
         } else {
             
             alertUserWithTitle("Are you sure?", message: "This doesn't seem to be a valid web page.")
-            println("return 3")
             return false
         }
     }
@@ -295,7 +286,6 @@ class URLPostingViewController: UIViewController {
             
             if let error = error {
                 
-                println("return 4")
                 dispatch_async(dispatch_get_main_queue(), {
                     
                     self.alertUserWithTitle("Are you sure?", message: "This doesn't seem to be a valid web page.")
@@ -309,6 +299,7 @@ class URLPostingViewController: UIViewController {
     
     func updateStudentLocations() {
         
+        //Get the most current student locations from Parse.
         OnTheMapClient.sharedInstance().getParseStudentLocationsWithPage(1, completionHandler: {
             result, error in
             
@@ -319,13 +310,16 @@ class URLPostingViewController: UIViewController {
                 
                 if let students = result {
                     
+                    //Store the results in shared storage.
                     self.appDelegate.students = students
                 }
                 
-                self.delegate?.controllerFinishedPostingNewData() //TODO: this bit
-                
                 dispatch_async(dispatch_get_main_queue(), {
                     
+                    //Use delegate method to update original view controller to show new data.
+                    self.delegate?.controllerFinishedPostingNewData()
+                    
+                    //Return to original view controller.
                     self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
                 })
             }
@@ -339,6 +333,7 @@ extension URLPostingViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         
+        //Use dequeued view if available, otherwise create new MKPinAnnotationView.
         if let annotation = annotation {
             
             let identifier = "UserLocation"
@@ -364,6 +359,7 @@ extension URLPostingViewController: MKMapViewDelegate {
 
 extension URLPostingViewController: UITextFieldDelegate {
     
+    //Enable return key on keyboard.
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()

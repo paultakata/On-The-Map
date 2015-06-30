@@ -18,7 +18,6 @@
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
-            <string>Roboto-Regular</string>
         </mutableArray>
         <mutableArray key="Roboto-Thin.ttf">
             <string>Roboto-Thin</string>
@@ -66,21 +65,6 @@
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O69-Al-XBC">
-                                <rect key="frame" x="16" y="540" width="568" height="40"/>
-                                <color key="backgroundColor" red="0.29067202231276046" green="0.44953821135168071" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="cJN-2z-5O8"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
-                                <state key="normal" title="Sign in with Facebook">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="facebookButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="FTv-DR-E4n"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Rx-38-EYr">
                                 <rect key="frame" x="16" y="339" width="568" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.40151232529943293" blue="0.00042425815660196431" alpha="1" colorSpace="calibratedRGB"/>
@@ -125,6 +109,13 @@
                                 <fontDescription key="fontDescription" name="Roboto-Thin" family="Roboto" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atG-Bh-m4r" customClass="FBSDKLoginButton">
+                                <rect key="frame" x="16" y="540" width="568" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Uf9-7w-2vg"/>
+                                </constraints>
+                            </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ZJS-yY-DZg">
                                 <rect key="frame" x="282" y="281" width="37" height="37"/>
                             </activityIndicatorView>
@@ -133,16 +124,16 @@
                         <constraints>
                             <constraint firstItem="d3A-0J-zxq" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="2AF-X7-YCm"/>
                             <constraint firstItem="6Rx-38-EYr" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="3cY-vt-hNg"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="O69-Al-XBC" secondAttribute="bottom" constant="20" id="3ot-Tv-pFv"/>
                             <constraint firstItem="d3A-0J-zxq" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="38" id="4L2-oJ-5RO"/>
                             <constraint firstItem="6Rx-38-EYr" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="6OG-Xc-ED0"/>
                             <constraint firstItem="xU8-Qu-0go" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="6SJ-x9-Gss"/>
                             <constraint firstAttribute="centerY" secondItem="ZJS-yY-DZg" secondAttribute="centerY" id="9tR-42-M8W"/>
                             <constraint firstItem="xU8-Qu-0go" firstAttribute="top" secondItem="cd0-qg-FJE" secondAttribute="bottom" constant="8" id="PTq-cA-dMH"/>
+                            <constraint firstItem="atG-Bh-m4r" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="RFd-t4-J5r"/>
                             <constraint firstItem="cd0-qg-FJE" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="Rav-k0-scd"/>
                             <constraint firstItem="QWj-jg-2xO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="TUm-r8-hln"/>
-                            <constraint firstItem="O69-Al-XBC" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="ZOl-Ms-UMw"/>
                             <constraint firstItem="cd0-qg-FJE" firstAttribute="top" secondItem="D4i-dv-OSs" secondAttribute="bottom" constant="8" id="aiC-Ot-JKy"/>
+                            <constraint firstItem="atG-Bh-m4r" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="c2i-AP-h56"/>
                             <constraint firstItem="QWj-jg-2xO" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="gqh-z1-dBl"/>
                             <constraint firstItem="xU8-Qu-0go" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="jYL-nv-3qY"/>
                             <constraint firstItem="cd0-qg-FJE" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="kMf-b6-EpI"/>
@@ -152,16 +143,17 @@
                             <constraint firstItem="d3A-0J-zxq" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="r6C-gl-ptd"/>
                             <constraint firstItem="QWj-jg-2xO" firstAttribute="top" secondItem="6Rx-38-EYr" secondAttribute="bottom" constant="8" id="tRx-3C-Cor"/>
                             <constraint firstItem="6Rx-38-EYr" firstAttribute="top" secondItem="xU8-Qu-0go" secondAttribute="bottom" constant="8" id="u20-k1-bwn"/>
-                            <constraint firstItem="O69-Al-XBC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="u8G-ep-wsy"/>
                             <constraint firstAttribute="centerX" secondItem="ZJS-yY-DZg" secondAttribute="centerX" id="u9y-Em-RpN"/>
                             <constraint firstItem="nuM-yH-49w" firstAttribute="top" secondItem="QWj-jg-2xO" secondAttribute="bottom" constant="8" id="uRg-Rd-nOj"/>
                             <constraint firstItem="D4i-dv-OSs" firstAttribute="top" secondItem="d3A-0J-zxq" secondAttribute="bottom" constant="8" id="xrC-Nq-Mbl"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="atG-Bh-m4r" secondAttribute="bottom" constant="20" id="y97-d7-qnH"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicatorView" destination="ZJS-yY-DZg" id="Mfi-Nt-N1a"/>
                         <outlet property="debugLabel" destination="nuM-yH-49w" id="ye5-QI-8SL"/>
                         <outlet property="emailTextField" destination="cd0-qg-FJE" id="7RS-Sa-Klf"/>
+                        <outlet property="facebookLoginButton" destination="atG-Bh-m4r" id="egn-Fx-7PN"/>
                         <outlet property="passwordTextField" destination="xU8-Qu-0go" id="YM1-rq-Sh9"/>
                         <outlet property="udacityImageView" destination="d3A-0J-zxq" id="Jja-Pp-3Cf"/>
                     </connections>

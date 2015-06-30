@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class ListTableViewController: UITableViewController {
     
@@ -55,6 +56,7 @@ class ListTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        //Use StudentInfoTableViewCell for table view.
         let cell = tableView.dequeueReusableCellWithIdentifier("StudentInfoTableViewCell", forIndexPath: indexPath) as! StudentInfoTableViewCell
         
         cell.studentNameLabel.text = appDelegate.students[indexPath.row].firstName + " " + appDelegate.students[indexPath.row].lastName
@@ -96,7 +98,6 @@ class ListTableViewController: UITableViewController {
                         UIApplication.sharedApplication().openURL(url)
                     }
                 }
-                
             } else {
                 
                 alertUserWithTitle("Unable to open web page.", message: "Invalid URL.")
@@ -108,14 +109,19 @@ class ListTableViewController: UITableViewController {
         }
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
+    //MARK: Navigation
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        //Send self to next view controller to use it as delegate in URLPostingViewController.
+        if segue.identifier == "PinSegue" {
+            
+            let nextVC = segue.destinationViewController as! InformationPostingViewController
+            
+            nextVC.previousVC = segue.sourceViewController as! ListTableViewController
+        }
+    }
+    
     //MARK: - IBAction methods
     
     @IBAction func refreshBarButtonPressed(sender: UIBarButtonItem) {
@@ -130,14 +136,20 @@ class ListTableViewController: UITableViewController {
     
     func logoutBarButtonPressed() {
         
-        let alert = UIAlertController(title: "Logout?", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive) {
+        let alert = UIAlertController(title: "Do you really want to log out?",
+            message: "",
+            preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let okAction = UIAlertAction(title: "Log Out",
+            style: UIAlertActionStyle.Destructive) {
             action in
             
             self.logout()
         }
         
-        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil)
+        let noAction = UIAlertAction(title: "No",
+            style: UIAlertActionStyle.Cancel,
+            handler: nil)
         
         alert.addAction(okAction)
         alert.addAction(noAction)
@@ -179,6 +191,7 @@ class ListTableViewController: UITableViewController {
 
     func updateStudentLocations() {
         
+        //Fetch current student data and refresh table view.
         OnTheMapClient.sharedInstance().getParseStudentLocationsWithPage(1, completionHandler: {
             result, error in
             
@@ -195,32 +208,62 @@ class ListTableViewController: UITableViewController {
             }
         })
     }
-
     
     func logout() {
         
-        OnTheMapClient.sharedInstance().logoutFromUdacity {
-            success, errorString in
+        //If logged in using Facebook, log out using Facebook...
+        if FBSDKAccessToken.currentAccessToken() != nil {
             
-            if success {
+            FBSDKLoginManager().logOut()
+            deleteLocalData()
+            
+            //Go back to login view.
+            dispatch_async(dispatch_get_main_queue(), {
                 
-                //If logout successful, remove locally stored data.
-                self.appDelegate.students = []
+                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            })
+            
+            //...or if logged in using Udacity, log out using Udacity.
+        } else {
+            
+            OnTheMapClient.sharedInstance().logoutFromUdacity {
+                success, errorString in
                 
-                OnTheMapClient.sharedInstance().userID = nil
-                OnTheMapClient.sharedInstance().sessionID = nil
-                OnTheMapClient.sharedInstance().userFirstName = nil
-                OnTheMapClient.sharedInstance().userLastName = nil
-                
-                //Go back to login screen.
-                dispatch_async(dispatch_get_main_queue(), {
+                if success {
                     
-                    self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-                })
-            } else {
-                
-                self.alertUserWithTitle("Error", message: errorString!)
+                    self.deleteLocalData()
+                    
+                    //Go back to login view.
+                    dispatch_async(dispatch_get_main_queue(), {
+                        
+                        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                } else {
+                    
+                    self.alertUserWithTitle("Error", message: errorString!)
+                }
             }
         }
+    }
+    
+    func deleteLocalData() {
+        
+        //Delete local copies of received data.
+        self.appDelegate.students = []
+        
+        OnTheMapClient.sharedInstance().userID = nil
+        OnTheMapClient.sharedInstance().sessionID = nil
+        OnTheMapClient.sharedInstance().userFirstName = nil
+        OnTheMapClient.sharedInstance().userLastName = nil
+    }
+}
+
+//MARK: - URLPostingViewControllerDelegate
+
+extension ListTableViewController: URLPostingViewControllerDelegate {
+    
+    func controllerFinishedPostingNewData() {
+        
+        self.tableView.reloadData()
     }
 }

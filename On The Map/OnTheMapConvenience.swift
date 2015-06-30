@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 extension OnTheMapClient {
     
@@ -232,6 +234,29 @@ extension OnTheMapClient {
             } else {
                 
                 completionHandler(success: true, error: nil)
+            }
+        }
+    }
+    
+    func getFacebookPublicUserData(completionHandler: (success: Bool, userData: AnyObject?, errorString: String?) -> Void) {
+        
+        //Create and make request to Facebook.
+        let request = FBSDKGraphRequest(graphPath: "me", parameters: nil)
+        
+        request.startWithCompletionHandler {
+            connection, result, error in
+            
+            if let error = error {
+                
+                completionHandler(success: false, userData: nil, errorString: error.localizedDescription)
+            } else {
+                
+                //Update local properties with received data.
+                OnTheMapClient.sharedInstance().userFirstName = result.valueForKey(FacebookJSONResponseKeys.FirstName) as? String
+                OnTheMapClient.sharedInstance().userLastName  = result.valueForKey(FacebookJSONResponseKeys.LastName)  as? String
+                OnTheMapClient.sharedInstance().userID        = result.valueForKey(FacebookJSONResponseKeys.UserID)    as? String
+                
+                completionHandler(success: true, userData: result, errorString: nil)
             }
         }
     }

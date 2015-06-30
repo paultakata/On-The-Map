@@ -22,6 +22,7 @@ class InformationPostingViewController: UIViewController {
     @IBOutlet var      swipeDownRecogniser:                 UISwipeGestureRecognizer!
     
     var student: StudentInformation?
+    var previousVC: URLPostingViewControllerDelegate?
     
     //MARK: - Overrides
     //MARK: View methods
@@ -82,7 +83,11 @@ class InformationPostingViewController: UIViewController {
             
             if let error = error {
                 
-                self.alertUserWithTitle("Error", message: error.localizedDescription)
+                //Alert user and return UI to previous state.
+                self.alertUserWithTitle("Error", message: "Please try searching for another place.\n" + error.localizedDescription)
+                self.removeDimBackground()
+                self.activityIndicatorView.stopAnimating()
+                
             } else {
                 
                 if let location = resultArray.first as? CLPlacemark { //Assume the first result is correct.
@@ -91,6 +96,7 @@ class InformationPostingViewController: UIViewController {
                     let nextVC = self.storyboard?.instantiateViewControllerWithIdentifier("PostingViewController") as! URLPostingViewController
                     
                     nextVC.receivedLocation = location
+                    nextVC.delegate = self.previousVC
                     
                     self.student = StudentInformation(objectID: "",
                         uniqueKey: OnTheMapClient.sharedInstance().userID!,
@@ -109,6 +115,7 @@ class InformationPostingViewController: UIViewController {
         }
     }
 
+    //Swipe down gesture to dismiss the view.
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
         
         self.dismissViewControllerAnimated(true, completion: nil)

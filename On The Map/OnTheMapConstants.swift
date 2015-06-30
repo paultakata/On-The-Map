@@ -90,7 +90,6 @@ extension OnTheMapClient {
         static let User       = "user"
     }
     
-    
     struct ParseJSONResponseKeys {
     
         static let Results   = "results"
@@ -105,6 +104,13 @@ extension OnTheMapClient {
         static let UpdatedAt = "updatedAt"
         static let CreatedAt = "createdAt"
         static let Code      = "code"
+    }
+    
+    struct FacebookJSONResponseKeys {
+    
+        static let FirstName = "first_name"
+        static let LastName  = "last_name"
+        static let UserID    = "id"
     }
     
     struct CommonJSONResponseKeys {

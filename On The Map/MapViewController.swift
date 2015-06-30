@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import FBSDKLoginKit
 
 class MapViewController: UIViewController {
 
@@ -22,7 +23,7 @@ class MapViewController: UIViewController {
     var locationManager:     CLLocationManager!
     var lastLocation:        CLLocation?
     
-    var URLPostingVC: URLPostingViewController? //TODO: How to do this?
+    //var URLPostingVC: URLPostingViewController?
     
     //MARK: - Overrides
     //MARK: View methods
@@ -60,6 +61,18 @@ class MapViewController: UIViewController {
         
         self.checkLocationAuthorizationStatus()
     }
+    
+    //MARK: Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "PinSegue" {
+            
+            let nextVC = segue.destinationViewController as! InformationPostingViewController
+            
+            nextVC.previousVC = segue.sourceViewController as! MapViewController
+        }
+    }
 
     //MARK: Memory management
     
@@ -84,20 +97,25 @@ class MapViewController: UIViewController {
     func logoutBarButtonPressed() {
         
         //Create alert to give user choice to continue or not.
-        let alert = UIAlertController(title: "Do you really want to log out?", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive) {
+        let alert = UIAlertController(title: "Do you really want to log out?",
+            message: "",
+            preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let okAction = UIAlertAction(title: "Log Out",
+            style: UIAlertActionStyle.Destructive) {
             action in
             
             self.logout()
         }
         
-        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil)
+        let noAction = UIAlertAction(title: "No",
+            style: UIAlertActionStyle.Cancel,
+            handler: nil)
         
         alert.addAction(okAction)
         alert.addAction(noAction)
         
         self.presentViewController(alert, animated: true, completion: nil)
-        
     }
         
     //MARK: - Helper functions
@@ -112,14 +130,21 @@ class MapViewController: UIViewController {
             //Create alert view with passed in error or string.
             if let error = error {
                 
-                alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .Alert)
+                alert = UIAlertController(title: "Error",
+                    message: error.localizedDescription,
+                    preferredStyle: .Alert)
                 
             } else if let string = string {
                 
-                alert = UIAlertController(title: "Error", message: string, preferredStyle: .Alert)
+                alert = UIAlertController(title: "Error",
+                    message: string,
+                    preferredStyle: .Alert)
             }
             
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let okAction = UIAlertAction(title: "OK",
+                style: .Default,
+                handler: nil)
+            
             alert!.addAction(okAction)
             
             self.presentViewController(alert!, animated: true, completion: nil)
@@ -128,6 +153,7 @@ class MapViewController: UIViewController {
     
     func checkLocationAuthorizationStatus() {
         
+        //Check to see if app is authorized to use the user's location, ask user if not.
         if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
             
             self.mapView.showsUserLocation = true
@@ -139,14 +165,22 @@ class MapViewController: UIViewController {
     
     func centreMapOnLocation(location: CLLocation) {
         
+        //Zoom map to show location.
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 10000, 10000)
         self.mapView.setRegion(coordinateRegion, animated: true)
     }
 
     func alertUserWithTitle(title: String, message: String) {
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        //Create alert and show it to user.
+        let alert = UIAlertController(title: title,
+            message: message,
+            preferredStyle: .Alert)
+        
+        let okAction = UIAlertAction(title: "OK",
+            style: .Default,
+            handler: nil)
+        
         alert.addAction(okAction)
         
         self.presentViewController(alert, animated: true, completion: nil)
@@ -217,6 +251,7 @@ class MapViewController: UIViewController {
     func updateAnnotations() {
         
         //Clear old local data, then repopulate.
+        self.previousAnnotations = self.annotations
         self.annotations = []
         
         for student in self.appDelegate.students {
@@ -226,6 +261,7 @@ class MapViewController: UIViewController {
         }
         
         //Show on mapView.
+        self.mapView.removeAnnotations(self.previousAnnotations)
         self.mapView.addAnnotations(self.annotations)
     }
     
@@ -255,29 +291,50 @@ class MapViewController: UIViewController {
     
     func logout() {
         
-        OnTheMapClient.sharedInstance().logoutFromUdacity {
-            success, errorString in
+        //If logged in using Facebook, log out using Facebook...
+        if FBSDKAccessToken.currentAccessToken() != nil {
             
-            if success {
+            FBSDKLoginManager().logOut()
+            deleteLocalData()
+            
+            //Go back to login view.
+            dispatch_async(dispatch_get_main_queue(), {
                 
-                //If logout successful, remove locally stored data.
-                self.appDelegate.students = []
+                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            })
+            
+            //...or if logged in using Udacity, log out using Udacity.
+        } else {
+            
+            OnTheMapClient.sharedInstance().logoutFromUdacity {
+                success, errorString in
                 
-                OnTheMapClient.sharedInstance().userID = nil
-                OnTheMapClient.sharedInstance().sessionID = nil
-                OnTheMapClient.sharedInstance().userFirstName = nil
-                OnTheMapClient.sharedInstance().userLastName = nil
-                
-                //Go back to login screen.
-                dispatch_async(dispatch_get_main_queue(), {
+                if success {
                     
-                    self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-                })
-            } else {
-                
-                self.displayError(nil, string: errorString)
+                    self.deleteLocalData()
+                    
+                    //Go back to login view.
+                    dispatch_async(dispatch_get_main_queue(), {
+                        
+                        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                } else {
+                    
+                    self.displayError(nil, string: errorString)
+                }
             }
         }
+    }
+    
+    func deleteLocalData() {
+        
+        //Delete local copies of received data.
+        self.appDelegate.students = []
+        
+        OnTheMapClient.sharedInstance().userID = nil
+        OnTheMapClient.sharedInstance().sessionID = nil
+        OnTheMapClient.sharedInstance().userFirstName = nil
+        OnTheMapClient.sharedInstance().userLastName = nil
     }
 }
 
@@ -345,8 +402,6 @@ extension MapViewController: MKMapViewDelegate {
                             UIApplication.sharedApplication().openURL(url)
                         }
                     }
-                    
-                    
                 } else {
                     
                     //Alert user why Safari hasn't opened.
@@ -382,6 +437,8 @@ extension MapViewController: CLLocationManagerDelegate {
         self.checkLocationAuthorizationStatus()
     }
 }
+
+//MARK: - URLPostingViewControllerDelegate
 
 extension MapViewController: URLPostingViewControllerDelegate {
     

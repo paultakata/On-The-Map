@@ -7,40 +7,55 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController {
 
     //MARK: - Properties
     
-    @IBOutlet weak var udacityImageView: UIImageView!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var debugLabel: UILabel!
+    @IBOutlet weak var udacityImageView:      UIImageView!
+    @IBOutlet weak var emailTextField:        UITextField!
+    @IBOutlet weak var passwordTextField:     UITextField!
+    @IBOutlet weak var debugLabel:            UILabel!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var facebookLoginButton:   FBSDKLoginButton!
     
     var appDelegate: AppDelegate!
-    //var session: NSURLSession!
     
     //MARK: - Overrides
     //MARK: View methods
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
-        //Assign delegates.
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        //session = NSURLSession.sharedSession()
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
+        //Assign delegates and Facebook permissions.
+        appDelegate                         = UIApplication.sharedApplication().delegate as! AppDelegate
+        emailTextField.delegate             = self
+        passwordTextField.delegate          = self
+        facebookLoginButton.delegate        = self
+        facebookLoginButton.readPermissions = ["public_profile"]
         
         //Set up UI.
         configureUI()
     }
     
     override func viewWillAppear(animated: Bool) {
+        
         super.viewWillAppear(animated)
         
         debugLabel.text = ""
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        //If app is already logged in to Facebook, bypass login screen.
+        if FBSDKAccessToken.currentAccessToken() != nil {
+            
+            completeLogin()
+        }
     }
 
     //MARK: Memory management
@@ -91,17 +106,8 @@ class LoginViewController: UIViewController {
             dimBackground()
             
             //Attempt to authenticate with user's details.
-            OnTheMapClient.sharedInstance().authenticateWithUdacityUsername(emailTextField.text, password: passwordTextField.text) {
-                success, errorString in
-                
-                if success {
-                    
-                    self.completeLogin()
-                } else {
-                    
-                    self.displayError(errorString)
-                }
-            }
+            loginWithUdacity()
+            
         } else {
             
             self.debugLabel.text = "Please enter a valid email."
@@ -114,14 +120,27 @@ class LoginViewController: UIViewController {
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signin")!)
     }
     
-    @IBAction func facebookButtonPressed(sender: UIButton) {
-        
-    }
-    
     //MARK: - Helper methods
+    
+    func loginWithUdacity() {
+        
+        //Attempt to login using Udacity email and password.
+        OnTheMapClient.sharedInstance().authenticateWithUdacityUsername(emailTextField.text, password: passwordTextField.text) {
+            success, errorString in
+            
+            if success {
+                
+                self.completeLogin()
+            } else {
+                
+                self.displayError(errorString, withRetry: true)
+            }
+        }
+    }
     
     func completeLogin() {
         
+        //Prepare UI and segue to new view controller.
         dispatch_async(dispatch_get_main_queue(), {
             
             let controller = self.storyboard!.instantiateViewControllerWithIdentifier("MainTabBarController") as! UITabBarController
@@ -135,15 +154,20 @@ class LoginViewController: UIViewController {
         })
     }
     
-    func displayError(errorString: String?) {
+    func displayError(errorString: String?, withRetry: Bool) {
         
+        //Create alert view with passed in error string.
         dispatch_async(dispatch_get_main_queue(), {
             
             if let errorString = errorString {
                 
-                //Create alert view with passed in error string.
-                let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "OK", style: .Default, handler: {
+                let alert = UIAlertController(title: "Error",
+                    message: errorString,
+                    preferredStyle: .Alert)
+                
+                let okAction = UIAlertAction(title: "OK",
+                    style: .Default,
+                    handler: {
                     action in
                     
                     self.removeDimBackground()
@@ -151,6 +175,20 @@ class LoginViewController: UIViewController {
                 })
                 
                 alert.addAction(okAction)
+                
+                //Add retry option if failed Udacity login.
+                if withRetry {
+                    
+                    let retryAction = UIAlertAction(title: "Retry",
+                        style: .Default,
+                        handler: {
+                        action in
+                        
+                        self.loginWithUdacity()
+                    })
+                    
+                    alert.addAction(retryAction)
+                }
                 
                 self.presentViewController(alert, animated: true, completion: nil)
             }
@@ -232,5 +270,47 @@ extension LoginViewController: UITextFieldDelegate {
         }
         
         return true
+    }
+}
+
+//MARK: - FBSDKLoginButtonDelegate
+
+extension LoginViewController: FBSDKLoginButtonDelegate {
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        
+        //Alert user if there is an error.
+        if let error = error {
+            
+            displayError(error.localizedDescription, withRetry: false)
+        } else if result.isCancelled {
+            
+            displayError("Please login to continue using this app.", withRetry: false)
+        } else {
+            
+            //Check for public profile access before getting user data and completing login.
+            if result.grantedPermissions.contains("public_profile") {
+                
+                OnTheMapClient.sharedInstance().getFacebookPublicUserData( {
+                    success, userData, errorString in
+                    
+                    if success {
+                        
+                        self.completeLogin()
+                    } else {
+                        
+                        self.displayError(errorString, withRetry: false)
+                    }
+                })
+            } else {
+                
+                displayError("Public profile permission is required for this app to function.", withRetry: false)
+            }
+        }
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        
+        //Nothing required here.
     }
 }
