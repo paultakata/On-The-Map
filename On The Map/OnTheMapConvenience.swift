@@ -88,7 +88,7 @@ extension OnTheMapClient {
                 if let accountRegistered = JSONResult.valueForKey(OnTheMapClient.UdacityJSONResponseKeys.Account)?.valueForKey(OnTheMapClient.UdacityJSONResponseKeys.Registered) as? Bool {
                     
                     if accountRegistered == false {
-                        //TODO: Show alert view telling user to register?
+                        
                         println("User not registered.")
                     } else {
                         
