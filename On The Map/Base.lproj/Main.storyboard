@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -211,14 +211,6 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter a place..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H9v-d8-75l">
-                                                        <rect key="frame" x="8" y="280" width="584" height="40"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="xbS-Kz-RRx"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" name="Roboto-Thin" family="Roboto" pointSize="24"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPD-9x-I3K">
                                                         <rect key="frame" x="213" y="480" width="174" height="41"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="24"/>
@@ -229,6 +221,23 @@
                                                             <action selector="findButtonPressed:" destination="Gfw-Lu-1oy" eventType="touchUpInside" id="lua-xo-yNA"/>
                                                         </connections>
                                                     </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pc3-c1-nMk">
+                                                        <rect key="frame" x="536" y="28" width="48" height="30"/>
+                                                        <state key="normal" title="Cancel">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="cancelButtonPressed:" destination="Gfw-Lu-1oy" eventType="touchUpInside" id="K9w-7a-pIc"/>
+                                                        </connections>
+                                                    </button>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter a place..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H9v-d8-75l">
+                                                        <rect key="frame" x="8" y="281" width="584" height="39"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="39" id="xbS-Kz-RRx"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Roboto-Thin" family="Roboto" pointSize="24"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
                                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Lji-yl-vDo">
                                                         <rect key="frame" x="282" y="281" width="37" height="37"/>
                                                     </activityIndicatorView>
@@ -238,6 +247,7 @@
                                                     <constraint firstItem="H9v-d8-75l" firstAttribute="leading" secondItem="89A-si-vx5" secondAttribute="leading" constant="8" id="1XG-hA-f1i"/>
                                                     <constraint firstAttribute="centerY" secondItem="ptS-Ro-S5R" secondAttribute="centerY" constant="204.5" id="5XD-Ar-F6r"/>
                                                     <constraint firstItem="XLg-fJ-F0E" firstAttribute="leading" secondItem="89A-si-vx5" secondAttribute="leading" id="8xe-mC-7yF"/>
+                                                    <constraint firstItem="Pc3-c1-nMk" firstAttribute="top" secondItem="89A-si-vx5" secondAttribute="top" constant="28" id="Add-Ag-T0c"/>
                                                     <constraint firstAttribute="centerX" secondItem="H9v-d8-75l" secondAttribute="centerX" id="CPn-Dc-Oue"/>
                                                     <constraint firstAttribute="trailing" secondItem="H9v-d8-75l" secondAttribute="trailing" constant="8" id="HTx-1t-kdR"/>
                                                     <constraint firstAttribute="trailing" secondItem="XLg-fJ-F0E" secondAttribute="trailing" id="QbZ-p4-kDk"/>
@@ -246,6 +256,7 @@
                                                     <constraint firstAttribute="centerX" secondItem="XLg-fJ-F0E" secondAttribute="centerX" id="ZZa-XP-dip"/>
                                                     <constraint firstAttribute="centerY" secondItem="iUS-jd-CHA" secondAttribute="centerY" constant="241.5" id="bDf-FO-WAD"/>
                                                     <constraint firstItem="tPD-9x-I3K" firstAttribute="top" secondItem="XLg-fJ-F0E" secondAttribute="bottom" constant="80" id="bRD-je-B0a"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Pc3-c1-nMk" secondAttribute="trailing" constant="16" id="cAx-RD-8qT"/>
                                                     <constraint firstAttribute="centerX" secondItem="Lji-yl-vDo" secondAttribute="centerX" id="cOl-4d-t9F"/>
                                                     <constraint firstAttribute="centerX" secondItem="iUS-jd-CHA" secondAttribute="centerX" id="ein-Q8-Q0C"/>
                                                     <constraint firstAttribute="centerX" secondItem="tPD-9x-I3K" secondAttribute="centerX" id="jsG-rJ-soW"/>
@@ -314,12 +325,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter a web address..." textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="tS1-uz-Pdd">
-                                <rect key="frame" x="180" y="86" width="241" height="29"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="24"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7KY-2f-5iw">
+                                <rect key="frame" x="536" y="28" width="48" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="pxT-Zr-h4V" eventType="touchUpInside" id="1CX-bB-YwL"/>
+                                </connections>
+                            </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NcM-UF-son">
+                                <rect key="frame" x="0.0" y="200" width="600" height="400"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="7Pq-iI-j38"/>
+                                </constraints>
+                            </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TvH-9P-9m3">
                                 <rect key="frame" x="263" y="151" width="75" height="41"/>
                                 <fontDescription key="fontDescription" name="Roboto-Thin" family="Roboto" pointSize="24"/>
@@ -330,12 +350,12 @@
                                     <action selector="submitButtonPressed:" destination="pxT-Zr-h4V" eventType="touchUpInside" id="ccv-VN-tlC"/>
                                 </connections>
                             </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NcM-UF-son">
-                                <rect key="frame" x="0.0" y="200" width="600" height="400"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="7Pq-iI-j38"/>
-                                </constraints>
-                            </mapView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter a web address..." textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="tS1-uz-Pdd">
+                                <rect key="frame" x="180" y="86" width="241" height="29"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textField>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="YCe-2t-9PT">
                                 <rect key="frame" x="282" y="281" width="37" height="37"/>
                             </activityIndicatorView>
@@ -343,16 +363,26 @@
                         <color key="backgroundColor" red="0.7578596460707071" green="0.70259093746064416" blue="0.13884205348751577" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="7KY-2f-5iw" secondAttribute="trailing" id="7R8-X2-DqZ"/>
                             <constraint firstAttribute="centerY" secondItem="YCe-2t-9PT" secondAttribute="centerY" id="CrR-mc-pa8"/>
                             <constraint firstAttribute="centerX" secondItem="tS1-uz-Pdd" secondAttribute="centerX" id="HwR-ZP-8UH"/>
+                            <constraint firstItem="7KY-2f-5iw" firstAttribute="top" secondItem="3FN-ra-dsh" secondAttribute="bottom" constant="8" id="NgR-t7-iBy"/>
                             <constraint firstAttribute="centerY" secondItem="tS1-uz-Pdd" secondAttribute="centerY" constant="200" id="OSK-Rh-KaO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="NcM-UF-son" secondAttribute="trailing" constant="-16" id="Vrp-3H-3yL"/>
                             <constraint firstItem="NcM-UF-son" firstAttribute="leading" secondItem="xfA-dy-csi" secondAttribute="leadingMargin" constant="-16" id="ZIE-xP-CYH"/>
                             <constraint firstAttribute="centerX" secondItem="YCe-2t-9PT" secondAttribute="centerX" id="ZdT-E3-Hkl"/>
                             <constraint firstItem="NcM-UF-son" firstAttribute="top" secondItem="TvH-9P-9m3" secondAttribute="bottom" constant="8" id="ceg-fh-aVA"/>
+                            <constraint firstItem="7KY-2f-5iw" firstAttribute="trailing" secondItem="xfA-dy-csi" secondAttribute="trailingMargin" id="kIA-IU-rg1"/>
                             <constraint firstAttribute="centerX" secondItem="TvH-9P-9m3" secondAttribute="centerX" id="kcF-Mo-wXK"/>
                             <constraint firstItem="eqk-cu-nUx" firstAttribute="top" secondItem="NcM-UF-son" secondAttribute="bottom" id="sOo-GI-piJ"/>
+                            <constraint firstItem="7KY-2f-5iw" firstAttribute="top" secondItem="3FN-ra-dsh" secondAttribute="bottom" constant="8" id="wmv-wM-yq8"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7R8-X2-DqZ"/>
+                                <exclude reference="wmv-wM-yq8"/>
+                            </mask>
+                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="MBu-wg-hWO" appends="YES" id="xKV-hn-elN"/>
                         </connections>

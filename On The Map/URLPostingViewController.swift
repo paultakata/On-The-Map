@@ -101,7 +101,14 @@ class URLPostingViewController: UIViewController {
         }
     }
 
+    //Swipe gesture to dismiss view.
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //Cancel button also dismisses view.
+    @IBAction func cancelButtonPressed(sender: UIButton) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -305,7 +312,28 @@ class URLPostingViewController: UIViewController {
             
             if let error = error {
                 
-                println("\(error.localizedDescription)")
+                //Display message informing user of download error.
+                let alert = UIAlertController(title: "Oops.",
+                    message: "Something went wrong fetching the latest data.\n Try tapping the refresh button.",
+                    preferredStyle: .Alert)
+                
+                let okAction = UIAlertAction(title: "OK, I'll do that.", style: .Default, handler: {
+                    action in
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        
+                        //Return to original view controller.
+                        self.presentingViewController?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                })
+                
+                alert.addAction(okAction)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                })
+                
             } else {
                 
                 if let students = result {

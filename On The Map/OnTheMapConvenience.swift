@@ -31,7 +31,7 @@ extension OnTheMapClient {
                     
                     if success {
                         
-                        if let userData  = userData as? [String : AnyObject],
+                        if let userData = userData as? [String : AnyObject],
                             user      = userData[UdacityJSONResponseKeys.User] as? [String : AnyObject],
                             firstName = user[UdacityJSONResponseKeys.FirstName] as? String,
                             lastName  = user[UdacityJSONResponseKeys.LastName] as? String {
@@ -155,7 +155,6 @@ extension OnTheMapClient {
             }
         }
     }
-    
     
     func getParseStudentLocationsWithPage(page: Int, completionHandler: (result: [StudentInformation]?, error: NSError?) -> Void) {
         

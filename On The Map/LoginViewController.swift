@@ -51,10 +51,20 @@ class LoginViewController: UIViewController {
         
         super.viewDidAppear(animated)
         
-        //If app is already logged in to Facebook, bypass login screen.
+        //If app is already logged in to Facebook, get user data and bypass login screen.
         if FBSDKAccessToken.currentAccessToken() != nil {
             
-            completeLogin()
+            OnTheMapClient.sharedInstance().getFacebookPublicUserData( {
+                success, userData, errorString in
+                
+                if success {
+                    
+                    self.completeLogin()
+                } else {
+                    
+                    self.displayError(errorString, withRetry: false)
+                }
+            })
         }
     }
 

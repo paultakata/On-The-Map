@@ -121,6 +121,12 @@ class InformationPostingViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //Cancel button also dismisses view.
+    @IBAction func cancelButtonPressed(sender: UIButton) {
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     //MARK: - Helper functions
     
     func alertUserWithTitle(title: String, message: String) {
