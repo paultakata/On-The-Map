@@ -1,5 +1,5 @@
 # On-The-Map
-Part of my Udacity Nanodegree course work.
+Project 3 of my Udacity iOS Nanodegree course work.
 
 This app is to demonstrate my newfound knowledge of networking clients and MapKit.
 It also reinforces the UIKit skills gained in previous modules.
@@ -36,3 +36,7 @@ So I read up on delegates and how to write them, creating a simple one that
 let me call a refresh method in the parent view controller from the posting
 view controller. Ha! Take that, small yet irritating problem!
 
+I also integrated the Facebook framework into this app to demonstrate the
+"Login With Facebook" authentication method. This gave the user the option
+to authenticate themselves either using their Udacity credentials or their
+Facebook identity.
