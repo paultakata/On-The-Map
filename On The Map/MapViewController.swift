@@ -268,7 +268,7 @@ class MapViewController: UIViewController {
     func dimBackground() {
         
         //Use a layer to create a dimmed background.
-        var dimLayer = CALayer()
+        let dimLayer = CALayer()
         
         dimLayer.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7).CGColor
         dimLayer.frame = view.frame
@@ -342,7 +342,7 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         //Use dequeued pin annotation view, or if not available create a new one.
         if let annotation = annotation as? StudentInformationAnnotation {
@@ -359,7 +359,7 @@ extension MapViewController: MKMapViewDelegate {
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.canShowCallout = true
                 view.calloutOffset = CGPoint(x: -5, y: 5)
-                view.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIView
+                view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
             }
             
             return view
@@ -367,7 +367,7 @@ extension MapViewController: MKMapViewDelegate {
         return nil
     }
     
-    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         //Get urlString from student annotation.
         if let student = view.annotation as? StudentInformationAnnotation {
@@ -414,16 +414,16 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
     
-    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         
         //Centre the map on the user initially, and if they move a reasonable distance.
         let currentLocation = userLocation.location
-        let distance = self.lastLocation?.distanceFromLocation(currentLocation)
+        let distance = self.lastLocation?.distanceFromLocation(currentLocation!)
         
         if distance == nil || distance > 1000 {
             
             self.lastLocation = currentLocation
-            self.centreMapOnLocation(currentLocation)
+            self.centreMapOnLocation(currentLocation!)
         }
     }
 }
@@ -432,7 +432,7 @@ extension MapViewController: MKMapViewDelegate {
 
 extension MapViewController: CLLocationManagerDelegate {
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         
         self.checkLocationAuthorizationStatus()
     }

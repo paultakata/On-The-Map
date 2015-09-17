@@ -77,10 +77,10 @@ class LoginViewController: UIViewController {
     
     //MARK: Touch responder
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         //Use touch responder to dismiss keyboard.
-        let touch = touches.first as! UITouch
+        let touch = touches.first!
         
         if touch.phase == .Began {
             
@@ -93,13 +93,13 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonPressed(sender: UIButton) {
         
         //Check for text entry by user.
-        if NSString(string: emailTextField.text).length == 0 {
+        if NSString(string: emailTextField.text!).length == 0 {
             
             self.debugLabel.text = "Please enter your email."
             return
         }
 
-        if NSString(string: passwordTextField.text).length == 0 {
+        if NSString(string: passwordTextField.text!).length == 0 {
             
             self.debugLabel.text = "Please enter your password."
             return
@@ -108,7 +108,7 @@ class LoginViewController: UIViewController {
         //Use regular expression to check validity of email entered.
         let emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$" //Regular expression taken from www.regular-expressions.info.
         
-        if let match = emailTextField.text.rangeOfString(emailRegex, options: .CaseInsensitiveSearch | .RegularExpressionSearch) {
+        if let _ = emailTextField.text!.rangeOfString(emailRegex, options: [.CaseInsensitiveSearch, .RegularExpressionSearch]) {
             
             //Prettify the UI.
             dismissKeyboard()
@@ -135,7 +135,7 @@ class LoginViewController: UIViewController {
     func loginWithUdacity() {
         
         //Attempt to login using Udacity email and password.
-        OnTheMapClient.sharedInstance().authenticateWithUdacityUsername(emailTextField.text, password: passwordTextField.text) {
+        OnTheMapClient.sharedInstance().authenticateWithUdacityUsername(emailTextField.text!, password: passwordTextField.text!) {
             success, errorString in
             
             if success {
@@ -212,7 +212,7 @@ class LoginViewController: UIViewController {
         
         let colorTop = UIColor(red: 1.0, green: 0.6, blue: 0.043, alpha: 1.0).CGColor
         let colorBottom = UIColor(red: 1.0, green: 0.435, blue: 0.0, alpha: 1.0).CGColor
-        var backgroundGradient = CAGradientLayer()
+        let backgroundGradient = CAGradientLayer()
         
         backgroundGradient.colors = [colorTop, colorBottom]
         backgroundGradient.locations = [0.0, 1.0]
@@ -228,7 +228,7 @@ class LoginViewController: UIViewController {
     func dimBackground() {
         
         //Use a layer to create a dimmed background.
-        var dimLayer = CALayer()
+        let dimLayer = CALayer()
         
         dimLayer.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7).CGColor
         dimLayer.frame = view.frame

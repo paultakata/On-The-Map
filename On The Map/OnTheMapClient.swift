@@ -57,7 +57,7 @@ class OnTheMapClient: NSObject {
                 } else {
                     
                     //Get data trimmed if from Udacity, otherwise parse data as is.
-                    let newData = website.getAppropriateDataToReturn(data)
+                    let newData = website.getAppropriateDataToReturn(data!)
                     OnTheMapClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
                 }
             }
@@ -83,7 +83,12 @@ class OnTheMapClient: NSObject {
             
             //Add appropriate HTTP header field keys and HTTP body.
             request = website.addHTTPHeaderFieldKeysForPOSTRequest(request)
-            request.HTTPBody = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonError)
+            do {
+                request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(jsonBody, options: [])
+            } catch let error as NSError {
+                jsonError = error
+                request.HTTPBody = nil
+            }
             
             //Make the request.
             let task = session.dataTaskWithRequest(request) {
@@ -97,7 +102,7 @@ class OnTheMapClient: NSObject {
                 } else {
                     
                     //Get data trimmed if from Udacity, otherwise parse data as is.
-                    let newData = website.getAppropriateDataToReturn(data)
+                    let newData = website.getAppropriateDataToReturn(data!)
                     OnTheMapClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
                 }
             }
@@ -123,7 +128,12 @@ class OnTheMapClient: NSObject {
             
             //Add appropriate HTTP header field keys and HTTP body.
             request = website.addHTTPHeaderFieldKeysForPUTRequest(request)
-            request.HTTPBody = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonError)
+            do {
+                request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(jsonBody, options: [])
+            } catch let error as NSError {
+                jsonError = error
+                request.HTTPBody = nil
+            }
             
             //Make the request.
             let task = session.dataTaskWithRequest(request) {
@@ -137,7 +147,7 @@ class OnTheMapClient: NSObject {
                 } else {
                     
                     //Get data trimmed if from Udacity, otherwise parse data as is.
-                    let newData = website.getAppropriateDataToReturn(data)
+                    let newData = website.getAppropriateDataToReturn(data!)
                     OnTheMapClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
                 }
             }
@@ -152,7 +162,7 @@ class OnTheMapClient: NSObject {
         completionHandler: (error: NSError?) -> Void) {
             
             //Create HEAD request and task.
-            var request = NSMutableURLRequest(URL: url)
+            let request = NSMutableURLRequest(URL: url)
             request.HTTPMethod = "HEAD"
             
             let task = session.dataTaskWithRequest(request) {
@@ -202,7 +212,7 @@ class OnTheMapClient: NSObject {
                     completionHandler(result: nil, error: newError)
                 } else {
                     
-                    let newData = website.getAppropriateDataToReturn(data)
+                    let newData = website.getAppropriateDataToReturn(data!)
                     OnTheMapClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
                 }
             }
@@ -229,13 +239,13 @@ class OnTheMapClient: NSObject {
             urlVars += [key + "=" + "\(replaceSpaceValue)"]
         }
         
-        return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
 
     //Check to see if there is a received error, if not, return the original local error.
     class func errorForData(data: NSData?, response: NSURLResponse?, error: NSError) -> NSError {
         
-        if let parsedResult = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? [String : AnyObject] {
+        if let parsedResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as? [String : AnyObject] {
             
             if let errorMessage = parsedResult[OnTheMapClient.CommonJSONResponseKeys.Error] as? String {
                 
@@ -251,7 +261,13 @@ class OnTheMapClient: NSObject {
     class func parseJSONWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
         
         var parsingError: NSError?
-        let parsedResult: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError)
+        let parsedResult: AnyObject?
+        do {
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+        } catch let error as NSError {
+            parsingError = error
+            parsedResult = nil
+        }
         
         if let error = parsingError {
             

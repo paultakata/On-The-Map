@@ -65,7 +65,7 @@ extension OnTheMapClient {
         POSTMethodWithWebsite(Website.Udacity, method: method, parameters: parameters, jsonBody: jsonBody) {
             JSONResult, error in
             
-            if let error = error {
+            if let _ = error {
                 
                 completionHandler(success: false, sessionID: nil, userID: nil, errorString: "Login Failed (Udacity User IDs)")
             } else {
@@ -89,7 +89,7 @@ extension OnTheMapClient {
                     
                     if accountRegistered == false {
                         
-                        println("User not registered.")
+                        print("User not registered.")
                     } else {
                         
                         if let sessionID = JSONResult.valueForKey(OnTheMapClient.UdacityJSONResponseKeys.Session)?.valueForKey(OnTheMapClient.UdacityJSONResponseKeys.ID)  as? String,
@@ -121,7 +121,7 @@ extension OnTheMapClient {
         GETMethodWithWebsite(Website.Udacity, method: method, parameters: parameters) {
             JSONResult, error in
             
-            if let error = error {
+            if let _ = error {
                 
                 completionHandler(success: false, userData: nil, errorString: "Failed to retrieve Udacity user data.")
             } else {
@@ -139,7 +139,7 @@ extension OnTheMapClient {
     func logoutFromUdacity(completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         //Declare method and (intentionally blank) parameters.
-        var method = Methods.Session
+        let method = Methods.Session
         let parameters = [String : AnyObject]()
         
         //Create request.
@@ -199,7 +199,7 @@ extension OnTheMapClient {
         POSTMethodWithWebsite(Website.Parse, method: "", parameters: parameters, jsonBody: jsonBody) {
             JSONResult, error in
             
-            if let error = error {
+            if let _ = error {
                 
                 completionHandler(success: false, objectID: nil)
             } else {

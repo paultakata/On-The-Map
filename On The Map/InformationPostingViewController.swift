@@ -56,9 +56,9 @@ class InformationPostingViewController: UIViewController {
     
     //MARK: Touch responder
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-        let touch = touches.first as! UITouch
+        let touch = touches.first!
         
         if touch.phase == .Began {
             
@@ -78,7 +78,7 @@ class InformationPostingViewController: UIViewController {
         activityIndicatorView.startAnimating()
         
         //Retrieve location from user input.
-        geocoder.geocodeAddressString(enterPlaceTextField.text, inRegion: nil) {
+        geocoder.geocodeAddressString(enterPlaceTextField.text!, inRegion: nil) {
             resultArray, error in //This completion handler executes on the main thread.
             
             if let error = error {
@@ -90,7 +90,7 @@ class InformationPostingViewController: UIViewController {
                 
             } else {
                 
-                if let location = resultArray.first as? CLPlacemark { //Assume the first result is correct.
+                let location = resultArray!.first!  //Assume the first result is correct.
                     
                     //Send it to the URL posting view controller.
                     let nextVC = self.storyboard?.instantiateViewControllerWithIdentifier("PostingViewController") as! URLPostingViewController
@@ -102,15 +102,15 @@ class InformationPostingViewController: UIViewController {
                         uniqueKey: OnTheMapClient.sharedInstance().userID!,
                         firstName: OnTheMapClient.sharedInstance().userFirstName!,
                         lastName:  OnTheMapClient.sharedInstance().userLastName!,
-                        mapString: self.enterPlaceTextField.text,
+                        mapString: self.enterPlaceTextField.text!,
                         mediaURL:  "",
-                        latitude:  Float(location.location.coordinate.latitude),
-                        longitude: Float(location.location.coordinate.longitude))
+                        latitude:  Float(location.location!.coordinate.latitude),
+                        longitude: Float(location.location!.coordinate.longitude))
                     
                     nextVC.receivedStudent = self.student
                     
                     self.presentViewController(nextVC, animated: true, completion: nil)
-                }
+                
             }
         }
     }
@@ -147,7 +147,7 @@ class InformationPostingViewController: UIViewController {
     func dimBackground() {
         
         //Use a layer to create a dimmed background.
-        var dimLayer = CALayer()
+        let dimLayer = CALayer()
         
         dimLayer.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7).CGColor
         dimLayer.frame = view.frame

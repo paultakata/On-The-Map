@@ -75,9 +75,9 @@ class URLPostingViewController: UIViewController {
     
     //MARK: Touch responder
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-        let touch = touches.first as! UITouch
+        let touch = touches.first!
         
         if touch.phase == .Began {
             
@@ -97,7 +97,7 @@ class URLPostingViewController: UIViewController {
         //to confirm, so there is no need to do so here.
         if checkStudentInformation() {
             
-            checkWebsiteHeaderForURLString(urlTextField.text)
+            checkWebsiteHeaderForURLString(urlTextField.text!)
         }
     }
 
@@ -120,7 +120,7 @@ class URLPostingViewController: UIViewController {
         //Cast region to CLCircularRegion because many CLRegion methods are deprecated in iOS8.
         let region = location.region as! CLCircularRegion
         
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.location.coordinate, region.radius, region.radius)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.location!.coordinate, region.radius, region.radius)
         
         self.mapView.setRegion(coordinateRegion, animated: true)
     }
@@ -135,7 +135,7 @@ class URLPostingViewController: UIViewController {
     func checkStudentInformation() -> Bool {
         
         //Check URL entered by user.
-        var text = urlTextField.text as NSString
+        var text = urlTextField.text! as NSString
         
         //Check existence of url.
         if text.length == 0 {
@@ -145,9 +145,9 @@ class URLPostingViewController: UIViewController {
         }
         
         //Check if url includes "http", add it if not.
-        if urlTextField.text.rangeOfString("http", options: .CaseInsensitiveSearch) == nil {
+        if urlTextField.text!.rangeOfString("http", options: .CaseInsensitiveSearch) == nil {
             
-            text = "http://" + urlTextField.text
+            text = "http://" + urlTextField.text!
         }
         
         //Check if string can be an NSURL, and that Safari can open it.
@@ -172,7 +172,7 @@ class URLPostingViewController: UIViewController {
         
         //Some text is required for the mediaURL property,
         //this defaults to one whitespace if the user doesn't enter anything.
-        receivedStudent.mediaURL = NSString(string: urlTextField.text).length != 0 ? urlTextField.text : " "
+        receivedStudent.mediaURL = NSString(string: urlTextField.text!).length != 0 ? urlTextField.text! : " "
         
         //Check if user has already posted a location, if so, update existing location...
         if let currentUser = appDelegate.user {
@@ -224,7 +224,7 @@ class URLPostingViewController: UIViewController {
     func dimBackground() {
         
         //Use a layer to create a dimmed background.
-        var dimLayer = CALayer()
+        let dimLayer = CALayer()
         
         dimLayer.backgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7).CGColor
         dimLayer.frame = view.frame
@@ -291,7 +291,7 @@ class URLPostingViewController: UIViewController {
         OnTheMapClient.sharedInstance().HEADMethodForURL(url) {
             error in
             
-            if let error = error {
+            if let _ = error {
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     
@@ -310,7 +310,7 @@ class URLPostingViewController: UIViewController {
         OnTheMapClient.sharedInstance().getParseStudentLocationsWithPage(1, completionHandler: {
             result, error in
             
-            if let error = error {
+            if let _ = error {
                 
                 //Display message informing user of download error.
                 let alert = UIAlertController(title: "Oops.",
@@ -359,27 +359,23 @@ class URLPostingViewController: UIViewController {
 
 extension URLPostingViewController: MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         //Use dequeued view if available, otherwise create new MKPinAnnotationView.
-        if let annotation = annotation {
+        let identifier = "UserLocation"
+        var view: MKPinAnnotationView
+        
+        if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView {
             
-            let identifier = "UserLocation"
-            var view: MKPinAnnotationView
+            dequeuedView.annotation = annotation
+            view = dequeuedView
+        } else {
             
-            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView {
-                
-                dequeuedView.annotation = annotation
-                view = dequeuedView
-            } else {
-                
-                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                view.canShowCallout = false
-            }
-            
-            return view
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.canShowCallout = false
         }
-        return nil
+        
+        return view
     }
 }
 

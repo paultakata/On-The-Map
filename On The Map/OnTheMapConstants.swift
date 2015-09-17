@@ -191,7 +191,7 @@ extension OnTheMapClient {
                 var xsrfCookie: NSHTTPCookie? = nil
                 let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
                 
-                for cookie in sharedCookieStorage.cookies as! [NSHTTPCookie] {
+                for cookie in sharedCookieStorage.cookies! {
                     
                     if cookie.name == "XSRF-TOKEN" {
                         xsrfCookie = cookie
@@ -201,7 +201,7 @@ extension OnTheMapClient {
                 //...add it to the request to logout.
                 if let xsrfCookie = xsrfCookie {
                     
-                    request.addValue(xsrfCookie.value!, forHTTPHeaderField: HTTPHeaderFieldKeys.UdacityXSRFToken)
+                    request.addValue(xsrfCookie.value, forHTTPHeaderField: HTTPHeaderFieldKeys.UdacityXSRFToken)
                 }
                 return request
             case .Parse:

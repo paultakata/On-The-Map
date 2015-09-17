@@ -14,8 +14,8 @@ class StudentInformationAnnotation: NSObject, MKAnnotation {
     
     //MARK: - Properties
     
-    var title:      String
-    var subtitle:   String
+    var title:      String?
+    var subtitle:   String?
     var URLString:  String
     var coordinate: CLLocationCoordinate2D
     
